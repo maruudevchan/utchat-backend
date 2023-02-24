@@ -13,16 +13,13 @@ import { validateToken } from '../middlewares/accessToken.middleware.js';
 export class Routes{
     initRoutes(app = express.application){
         app.get('/', (req, res) => {
-           
             res.status(200).send('<img src="https://i.pinimg.com/564x/38/18/9d/38189df7725c41f04273c3d1d974a55a.jpg" style="width:50%; display:block; margin-left:auto; margin-right:auto;"> <h1 style="text-align:center;font-family: monospace;">Welcome to my API</h1>');
         });
         //usuario
         app.route('/login').post(usuarioController.login);
         app.post('/signin', usuarioController.createUser);
-        app.route('/findMe').post(usuarioController.findUser);
-        app.route('/findUserById').post(usuarioController.findUserById);
-        app.route('/bringUsers').post(usuarioController.bringUsers);
-
+        app.post('/setOnline', usuarioController.setOnline);
+        app.post('/setOffline', usuarioController.setOffline);
         //chat
         app.route('/createChat').post( chatsController.createChat);
         app.route('/findChat').post(chatsController.findChat);

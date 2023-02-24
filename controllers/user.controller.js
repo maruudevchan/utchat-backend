@@ -27,20 +27,20 @@ class userController{
              return response.status(500).json({ok: false, error: query.error});
         }
     }
-
-    async findUser(req, res){
-        const body = req.body;
-        const query = await userQueries.findUser(body);
+    //poner usuario en activo
+    async setOnline(request, response){
+        const user = request.body;
+        const query = await userQueries.setOnline(user);
         if (query.ok){
-            return res.status(200).json({ok: true, data: query.data});
+            return response.status(200).json({ok: true, data: query.data});
         }else{
-            return res.status(500).json({ok: false, data: null});
-        }    
+            return response.status(500).json({ok: false, data: null});
+        }
     }
-
-    async findUserById(req, res){
-        const body = req.body;
-        const query = await userQueries.findUserById(body);
+    //poner usuario en inactivo
+    async setOffline(req, res){
+        const user = req.body;
+        const query = await userQueries.setOffline(user);
         if (query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -48,8 +48,8 @@ class userController{
         }
     }
 
-    async bringUsers(req, res){
-        const query = await userQueries.bringUsers();
+    async activeUsers(req, res){
+        const query = await userQueries.activeUsers(req.body.username);
         if (query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -71,10 +71,11 @@ class userController{
         const body = req.body;
         const query = await userQueries.findUser({
             username: body.username,
-            pwd: body.pwd
+            pwd: body.pwd,
+            isActive: true
         });
 
-        if (query.ok){
+        if (query){
             //valida password
             const match = pkg.compareSync(body.pwd, query.data.pwd);
             console.log('match: '+match);
@@ -83,7 +84,6 @@ class userController{
                 try {
                     const token = userController.payload.createToken(query.data);
                     return res.status(200).send({ok: true, token: token});
-        
                 } catch (error) {
                     return res.status(403).send({
                         ok: false,

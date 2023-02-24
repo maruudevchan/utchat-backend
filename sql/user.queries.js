@@ -5,6 +5,7 @@ class UserQueries{
     async store(user){
         try{
             const query = await UserModel.create(user);
+            const crearChat = await MessageModel.create({user1:user.username});
             if (query){
                 return {ok:true, data:query};
             }
@@ -16,7 +17,7 @@ class UserQueries{
 
     async findUser(user){
         try{
-            const query = await UserModel.findOne({username:user});
+            const query = await UserModel.findOne({where:{username:user.username}});
             if (query){
                 return {ok:true, data:query};
             }
@@ -39,9 +40,9 @@ class UserQueries{
         }
     }
 
-    async bringUsers(){
+    async activeUsers(){
         try{
-            const query = await UserModel.findAll();
+            const query = await UserModel.findAll({where:{isActive:true}});
             if (query){
                 return {ok:true, data:query};
             }
@@ -50,6 +51,36 @@ class UserQueries{
             return {ok:false, data:query.data};
         }
     }
+
+    async setOffline(user){
+        try{
+            const query = await UserModel.update({isActive:false}, {where:{username:user.username}});
+            if (query){
+                return {ok:true, data:query};
+            }
+        }catch (error) {
+            console.log('error al ejecutar query', error);
+            return {ok:false, data:query.data};
+        }
+    }
+
+    async setOnline(user){
+        try{
+            console.log('llego al query');
+            console.log('data de petición: '+user.username + ' ' + user.isOnline);
+            const query = await UserModel.update({isOnline:true}, {where:{username:user.username}});
+            console.log('llego al query');
+            console.log('query: '+query);
+
+            if (query){
+                return {ok:true, data:query};
+            }
+        }catch (error) {
+            console.log('error al ejecutar query', error);
+            return {ok:false, data:query.data};
+        }
+    }
+    
 
 }
 
