@@ -20,10 +20,12 @@ export class Routes{
         app.post('/signin', usuarioController.createUser);
         app.post('/setOnline', usuarioController.setOnline);
         app.post('/setOffline', usuarioController.setOffline);
+        //usuarios Online
+        app.route('/getOnlineUsers').get(usuarioController.activeUsers);
+        
         //chat
         app.route('/createChat').post( chatsController.createChat);
         app.route('/findChat').post(chatsController.findChat);
-        // app.route('/bringChats').post( chatsController.bringChats);
 
         //message
         app.route('/sendMessage').post( messagesController.createMessage);

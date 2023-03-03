@@ -5,7 +5,6 @@ class UserQueries{
     async store(user){
         try{
             const query = await UserModel.create(user);
-            const crearChat = await MessageModel.create({user1:user.username});
             if (query){
                 return {ok:true, data:query};
             }
@@ -18,6 +17,7 @@ class UserQueries{
     async findUser(user){
         try{
             const query = await UserModel.findOne({where:{username:user.username}});
+            
             if (query){
                 return {ok:true, data:query};
             }
@@ -42,7 +42,7 @@ class UserQueries{
 
     async activeUsers(){
         try{
-            const query = await UserModel.findAll({where:{isActive:true}});
+            const query = await UserModel.findAll({where:{isOnline:true},attributes:['nam1','lastname1','lastname2']});
             if (query){
                 return {ok:true, data:query};
             }

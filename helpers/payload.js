@@ -19,16 +19,13 @@ export class Payload{
             // console.log(private_key);
         }
 
-        const user_id = data.id;
+        const u_id = data.idUser;
         const username = data.username;
-        const role  = 1;
-
        //el payload
         return jwt.sign({
-            user_id: user_id,
+            user_id: u_id,
             username: username,
-            role: role
-        },private_key,{algorithm: 'RS256', expiresIn: '5m'});
+        },private_key,{algorithm: 'RS256', expiresIn: '1h'});
     
     }
 
