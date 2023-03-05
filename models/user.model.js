@@ -1,4 +1,4 @@
-import { Model, DataTypes } from "sequelize";
+ import { Model, DataTypes } from "sequelize";
 import {DatabaseConfig} from "../config/database.js";
 
 export class UserModel extends Model {}

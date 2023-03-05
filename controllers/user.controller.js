@@ -49,7 +49,9 @@ class userController{
     }
 
     async activeUsers(req, res){
-        const query = await userQueries.activeUsers();
+        const idUser = req.params.id;
+        console.log(idUser);
+        const query = await userQueries.activeUsers(idUser);
         if (query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -77,12 +79,11 @@ class userController{
         if (query){
             //valida password
             const match = pkg.compareSync(body.pwd, query.data.pwd);
-            console.log('id: '+query.data.idUser);
             if (match==true){
                 try {
                     const token = userController.payload.createToken(query.data);
                     
-                    return res.status(200).send({ok: true, token: token});
+                    return res.status(200).send({ok: true, id: query.data.idUser , token: token});
                 } catch (error) {
                     return res.status(403).send({
                         ok: false,

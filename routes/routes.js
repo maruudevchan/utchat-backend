@@ -21,7 +21,7 @@ export class Routes{
         app.post('/setOnline', usuarioController.setOnline);
         app.post('/setOffline', usuarioController.setOffline);
         //usuarios Online
-        app.route('/getOnlineUsers').get(usuarioController.activeUsers);
+        app.route('/getOnlineUsers/:id').get(usuarioController.activeUsers);
         
         //chat
         app.route('/createChat').post( chatsController.createChat);

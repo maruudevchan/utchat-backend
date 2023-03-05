@@ -1,4 +1,5 @@
 import { query } from "express";
+import { Op } from "sequelize";
 import { UserModel } from "../models/user.model.js";
 
 class UserQueries{
@@ -40,9 +41,19 @@ class UserQueries{
         }
     }
 
-    async activeUsers(){
+    async activeUsers(idUser){
         try{
-            const query = await UserModel.findAll({where:{isOnline:true},attributes:['nam1','lastname1','lastname2']});
+            const query = await UserModel.findAll({
+                where: {
+                  idUser: {
+                    [Op.ne]: idUser
+                  },
+                  isOnline: true,
+                },
+                attributes: ['idUser', 'nam1', 'lastname1', 'lastname2'],
+              });
+          
+
             if (query){
                 return {ok:true, data:query};
             }
@@ -66,12 +77,9 @@ class UserQueries{
 
     async setOnline(user){
         try{
-            console.log('llego al query');
-            console.log('data de petición: '+user.username + ' ' + user.isOnline);
+            
             const query = await UserModel.update({isOnline:true}, {where:{username:user.username}});
-            console.log('llego al query');
-            console.log('query: '+query);
-
+            
             if (query){
                 return {ok:true, data:query};
             }
