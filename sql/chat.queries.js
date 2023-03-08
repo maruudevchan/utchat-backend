@@ -14,10 +14,11 @@ class chatsQueries{
         }
     }
 
-    async findChat(chat){
+    async findChat(id1,id2){
         try{
-            const query = await ChatModel.findOne({where:{user1:chat.user1, user2:chat.user2}});
+            const query = await ChatModel.findOne({where:{user1:id1, user2:id2}});
             if (query){
+                console.log("este es el chat: " +query.data);
                 return {ok:true, data:query};
             }
         }catch (error) {

@@ -27,47 +27,6 @@ class userController{
              return response.status(500).json({ok: false, error: query.error});
         }
     }
-    //poner usuario en activo
-    async setOnline(request, response){
-        const user = request.body;
-        const query = await userQueries.setOnline(user);
-        if (query.ok){
-            return response.status(200).json({ok: true, data: query.data});
-        }else{
-            return response.status(500).json({ok: false, data: null});
-        }
-    }
-    //poner usuario en inactivo
-    async setOffline(req, res){
-        const user = req.body;
-        const query = await userQueries.setOffline(user);
-        if (query.ok){
-            return res.status(200).json({ok: true, data: query.data});
-        }else{
-            return res.status(500).json({ok: false, data: null});
-        }
-    }
-
-    async activeUsers(req, res){
-        const idUser = req.params.id;
-        console.log(idUser);
-        const query = await userQueries.activeUsers(idUser);
-        if (query.ok){
-            return res.status(200).json({ok: true, data: query.data});
-        }else{
-            return res.status(500).json({ok: false, data: null});
-        }
-    }
-
-    async updateUser(req, res){
-        const body = req.body;
-        const query = await userQueries.updateUser(body);
-        if (query.ok){
-            return res.status(200).json({ok: true, data: query.data});
-        }else{
-            return res.status(500).json({ok: false, data: null});
-        }    
-    }
 
     async login(req, res){
         const body = req.body;
@@ -104,6 +63,69 @@ class userController{
         }
 
     }
+
+    //poner usuario en activo
+    async setOnline(request, response){
+        const user = request.body;
+        const query = await userQueries.setOnline(user);
+        if (query.ok){
+            return response.status(200).json({ok: true, data: query.data});
+        }else{
+            return response.status(500).json({ok: false, data: null});
+        }
+    }
+
+    //poner usuario en inactivo
+    async setOffline(req, res){
+        const user = req.body;
+        const query = await userQueries.setOffline(user);
+        if (query.ok){
+            return res.status(200).json({ok: true, data: query.data});
+        }else{
+            return res.status(500).json({ok: false, data: null});
+        }
+    }
+
+    async activeUsers(req, res){
+        const idUser = req.params.id;
+        const query = await userQueries.activeUsers(idUser);
+        if (query.ok){
+            return res.status(200).json({ok: true, data: query.data});
+        }else{
+            return res.status(500).json({ok: false, data: null});
+        }
+    }
+
+    async updateUser(req, res){
+        const body = req.body;
+        const query = await userQueries.updateUser(body);
+        if (query.ok){
+            return res.status(200).json({ok: true, data: query.data});
+        }else{
+            return res.status(500).json({ok: false, data: null});
+        }    
+    }
+
+    async findUser(req, res){
+        const body = req.body;
+        const query = await userQueries.findUser(body);
+        if (query.ok){
+            return res.status(200).json({ok: true, data: query.data});
+        }else{
+            return res.status(500).json({ok: false, data: null});
+        }
+    }
+
+    async findUserById(req, res){
+        const idUser = req.params.id;
+        const query = await userQueries.findUserById(idUser);
+        if (query.ok){
+            return res.status(200).json({ok: true, data: query.data});
+        }else{
+            return res.status(500).json({ok: false, data: null});
+        }
+    }
+    
 
 
 }
