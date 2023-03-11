@@ -56,28 +56,17 @@ class UserQueries{
 
     }
 
-    async updateUser(user){
-        try{
-            const query = await UserModel.update(user, {where:{username:user.username}});
-            if (query){
-                return {ok:true, data:query};
-            }
-        }catch (error) {
-            console.log('error al ejecutar query', error);
-            return {ok:false, data:query.data};
-        }
-    }
 
-    async activeUsers(idUser){
+    async activeUsers(id){
         try{
             const query = await UserModel.findAll({
                 where: {
-                  idUser: {
-                    [Op.ne]: idUser
+                  id: {
+                    [Op.not]: id
                   },
                   isOnline: true,
                 },
-                attributes: ['idUser', 'nam1', 'lastname1', 'lastname2'],
+                attributes: ['id', 'nombre'],
               });
           
 

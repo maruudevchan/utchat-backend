@@ -4,16 +4,27 @@ import {DatabaseConfig} from "../config/database.js";
 export class MessageModel extends Model {}
 
 MessageModel.init({
-    idText: {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    messages: {
-        type: DataTypes.JSON,
-        allowNull: true
+    idchat: {
+        type: DataTypes.INTEGER,
+        foreignKey: true,
+        allowNull: false
+    },
+    sender: {
+        type: DataTypes.INTEGER,
+        foreignKey: true,
+        allowNull: false
+    },
+    message: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 },
+
     {
         sequelize: DatabaseConfig,
         tableName: 'messages',

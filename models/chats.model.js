@@ -4,7 +4,7 @@ import {DatabaseConfig} from "../config/database.js";
 export class ChatModel extends Model {}
 
 ChatModel.init({
-    idChat: {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -16,11 +16,6 @@ ChatModel.init({
     },
     user2: {
         type: DataTypes.INTEGER,
-        foreignKey: true,
-        allowNull: false
-    },
-    idText: {
-        type: DataTypes.STRING,
         foreignKey: true,
         allowNull: false
     }

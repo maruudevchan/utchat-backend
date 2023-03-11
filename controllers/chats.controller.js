@@ -16,15 +16,21 @@ class chatController{
     }
 
     async findChat(req, res){
-        const user1 = req.params.id1;
-        const user2 = req.params.id2;
-        const query = await chatQueries.findChat(user1,user2);
-        if (query.ok){
-            console.log("este es el chat: " +query.data);
+        const id1 = req.params.id1;
+        const id2 = req.params.id2;
+        const query = await chatQueries.findChat(id1,id2);
+        if (query){
+            console.log('query', query);
             return res.status(200).json({ok: true, data: query.data});
         }else{
-            console.log("no hay chat")
-            return res.status(500).json({ok: false, data: null});
+            //osea no hay
+            console.log('No existe chat', query);
+            //creo el chat
+            const chat = {
+                user1: id1,
+                user2: id2
+            }
+            const query2 = await chatQueries.store(chat);
         }    
     }
 

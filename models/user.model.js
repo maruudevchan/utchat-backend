@@ -4,7 +4,7 @@ import {DatabaseConfig} from "../config/database.js";
 export class UserModel extends Model {}
 
 UserModel.init({
-    idUser: {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -18,21 +18,9 @@ UserModel.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    nam1: {
+    nombre: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    nam2: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    lastname1: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    lastname2: {
-        type: DataTypes.STRING,
-        allowNull: true
     },
     isOnline : {
         type: DataTypes.BOOLEAN,

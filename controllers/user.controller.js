@@ -12,18 +12,16 @@ class userController{
 
     async createUser(request, response){
         const body = request.body;
-        console.log(request.body);
-
         //encrypt password
         const salt = pkg.genSaltSync(saltRounds);
         const password = pkg.hashSync(body.pwd, salt);
         request.body.pwd = password;
         
-
         const query = await userQueries.store(body, body.pwd);
         if (query.ok){
             return response.status(200).json({ok: true, data: query.data});
         }else{
+            console.log(query.error);
              return response.status(500).json({ok: false, error: query.error});
         }
     }
@@ -42,7 +40,7 @@ class userController{
                 try {
                     const token = userController.payload.createToken(query.data);
                     
-                    return res.status(200).send({ok: true, id: query.data.idUser , token: token});
+                    return res.status(200).send({ok: true, id: query.data.id , token: token});
                 } catch (error) {
                     return res.status(403).send({
                         ok: false,
@@ -87,8 +85,8 @@ class userController{
     }
 
     async activeUsers(req, res){
-        const idUser = req.params.id;
-        const query = await userQueries.activeUsers(idUser);
+        const id = req.params.id;
+        const query = await userQueries.activeUsers(id);
         if (query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -117,8 +115,8 @@ class userController{
     }
 
     async findUserById(req, res){
-        const idUser = req.params.id;
-        const query = await userQueries.findUserById(idUser);
+        const id = req.params.id;
+        const query = await userQueries.findUserById(id);
         if (query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{

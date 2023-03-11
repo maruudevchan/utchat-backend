@@ -1,5 +1,9 @@
 import { query } from "express";
 import { ChatModel } from "../models/chats.model.js";
+import { messagesQueries } from "./message.queries.js";
+import { MessageModel } from "../models/messages.model.js";
+
+import {Op as Op} from 'sequelize';
 
 class chatsQueries{
     async store(chat){
@@ -16,17 +20,24 @@ class chatsQueries{
 
     async findChat(id1,id2){
         try{
-            const query = await ChatModel.findOne({where:{user1:id1, user2:id2}});
-            if (query){
-                console.log("este es el chat: " +query.data);
-                return {ok:true, data:query};
-            }
+            console.log('Llamada a la función findChat');
+            console.log('query de chats');
+            //primero checo en mensajes si existen mensajes
+            console.log("buscando mensajes en query");
+            const buscarChat = await ChatModel.findOne({
+                where: {
+                    [Op.or]: [
+                      { user1: id1, user2: id2 },
+                      { user1: id2, user2: id1 }
+                    ]
+                  }
+                });
         }catch (error) {
             console.log('error al ejecutar query', error);
             return {ok:false, data:query.data};
         }
-
     }
+    
 
     async findChatById(chat){
         try{
