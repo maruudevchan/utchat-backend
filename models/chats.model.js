@@ -11,12 +11,10 @@ ChatModel.init({
     },
     user1: {
         type: DataTypes.INTEGER,
-        foreignKey: true,
         allowNull: false
     },
     user2: {
         type: DataTypes.INTEGER,
-        foreignKey: true,
         allowNull: false
     }
 },

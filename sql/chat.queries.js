@@ -20,10 +20,7 @@ class chatsQueries{
 
     async findChat(id1,id2){
         try{
-            console.log('Llamada a la función findChat');
-            console.log('query de chats');
             //primero checo en mensajes si existen mensajes
-            console.log("buscando mensajes en query");
             const buscarChat = await ChatModel.findOne({
                 where: {
                     [Op.or]: [
@@ -32,6 +29,21 @@ class chatsQueries{
                     ]
                   }
                 });
+            if (buscarChat){
+                //el chat existe
+                return {ok:true, chat: buscarChat.id};
+            }else{
+                //el chat no existe
+                const chat = {
+                    user1: id1,
+                    user2: id2
+                }
+                const crearChat = await this.store(chat);
+                if (crearChat.ok) {
+                    //se crea el chat y se devuelve el id
+                    return {ok:true, chat: crearChat.data.id};
+                }
+            }
         }catch (error) {
             console.log('error al ejecutar query', error);
             return {ok:false, data:query.data};

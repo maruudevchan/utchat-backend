@@ -17,10 +17,10 @@ class messageQueries{
         }
     }
 
-    async findChat(mid){
+    async findMessages(chat){
+        
         try{
-            console.log('query de messages');
-            const query = await MessageModel.findOne({where:{idText:mid}});
+            const query = await MessageModel.findAll({where:{idChat:chat}});
             if (query){
                 return {ok:true, data:query};
             }

@@ -24,12 +24,11 @@ export class Routes{
         app.route('/getOnlineUsers/:id').get(usuarioController.activeUsers);
         
         //chat
-        app.route('/createChat').post( chatsController.createChat);
         app.route('/findChat/:id1/:id2').get(chatsController.findChat);
 
         //message
         app.route('/sendMessage').post( messagesController.createMessage);
-        app.route('/bringMessages').post( messagesController.findMessage);
+        app.route('/findMessages/:cid').get( messagesController.findMessages);
     }
 
 }

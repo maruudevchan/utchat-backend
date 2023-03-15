@@ -11,12 +11,10 @@ MessageModel.init({
     },
     idchat: {
         type: DataTypes.INTEGER,
-        foreignKey: true,
         allowNull: false
     },
     sender: {
         type: DataTypes.INTEGER,
-        foreignKey: true,
         allowNull: false
     },
     message: {
