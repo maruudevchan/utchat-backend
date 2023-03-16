@@ -6,13 +6,13 @@ import {Payload} from '../helpers/payload.js';
 class messageController{
     static payload = new Payload();
 
-    async createMessage(req, res){
-        const body = req.body;
-        const query = await messagesQueries.store(body);
+    async saveMessage(request, response){
+        const newmessage = request.body;
+        const query = await messagesQueries.store(newmessage);
         if (query.ok){
-            return res.status(200).json({ok: true, data: query.data});
+            return response.status(200).json({ok: true, data: query.data});
         }else{
-             return res.status(500).json({ok: false, error: query.error});
+             return response.status(500).json({ok: false, error: query.error});
         }
     }
 
