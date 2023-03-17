@@ -4,6 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Routes } from '../routes/routes.js';
 import { Database } from './database.js';
+import { Server } from "socket.io"
+
 dotenv.config();
 
 class App {
@@ -18,10 +20,26 @@ class App {
 
     async initializeApp() {
         this.app = express();
+        this.initSocket()
         this.config();
         this.http = http.createServer(this.app);
         await this.initDatabase();
         this.routes.initRoutes(this.app);
+    }
+
+    initSocket(){
+        const io = new Server(3001, {
+            cors: {
+                origin: '*',
+            }
+        });
+
+        io.on('connection', (socket) => {
+            socket.on('new-message', data => {
+                console.log(data)
+                io.emit('new-message', "mensaje guardado")
+            })
+        });
     }
     
     config() {
