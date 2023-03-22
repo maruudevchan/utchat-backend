@@ -32,7 +32,7 @@ class UserQueries{
 
     async setOffline(user){
         try{
-            const query = await UserModel.update({isActive:false}, {where:{username:user.username}});
+            const query = await UserModel.update({isOnline:false}, {where:{id:user.id}});
             if (query){
                 return {ok:true, data:query};
             }

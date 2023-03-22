@@ -25,7 +25,7 @@ export class Payload{
         return jwt.sign({
             user_id: u_id,
             username: username,
-        },private_key,{algorithm: 'RS256', expiresIn: '1h'});
+        },private_key,{algorithm: 'RS256', expiresIn: '2m'});
     
     }
 
