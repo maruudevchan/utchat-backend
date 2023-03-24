@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import { Routes } from '../routes/routes.js';
 import { Database } from './database.js';
 import { Server } from "socket.io"
+import { messagesQueries } from '../sql/message.queries.js'
 
 dotenv.config();
 
@@ -35,9 +36,15 @@ class App {
         });
 
         io.on('connection', (socket) => {
-            socket.on('new-message', data => {
-                console.log(data)
-                io.emit('new-message', "mensaje guardado")
+            socket.on('new-message', async (data) => {
+                console.log(data);
+                const query = await messagesQueries.findMessages(data.idchat);
+
+                if(query.ok){
+                    io.emit('new-message', query.data)
+                }
+
+                
             })
         });
     }
