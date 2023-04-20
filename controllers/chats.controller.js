@@ -28,6 +28,16 @@ class chatController {
 
     }
 
+
+    async findChatById(req, res) {
+        const id = req.params.id;
+        const query = await chatQueries.findChatByUser(id);
+        if (query) {
+            return res.status(200).json({ ok: true, data: query.data });
+        } else {
+            return res.status(500).json({ ok: false, error: query.error });
+        }
+    }
 }
 
 export const chatsController = new chatController();

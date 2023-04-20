@@ -8,7 +8,6 @@ class messageQueries{
             const insertQuery = await MessageModel.create(message);
             
             if (insertQuery){ 
-                console.log('insert No. '+ insertQuery.id + ' en messages');
                 return {ok:true,id: insertQuery.id , data:insertQuery};
             }
         }catch (error) {

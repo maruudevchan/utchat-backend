@@ -9,7 +9,6 @@ const saltRounds = 10;
 class userController{
     static payload = new Payload();
 
-
     async createUser(request, response){
         const body = request.body;
         //encrypt password
@@ -34,7 +33,6 @@ class userController{
         });
 
         if (query){
-            //valida password
             const match = pkg.compareSync(body.pwd, query.data.pwd);
             if (match==true){
                 try {
@@ -54,7 +52,6 @@ class userController{
                     message:'Incorrect password'
                 });
             }
-            
 
         }else{
             return res.status(404).json({ok: false, data: null});
@@ -62,7 +59,6 @@ class userController{
 
     }
 
-    //poner usuario en activo
     async setOnline(request, response){
         const user = request.body;
         const query = await userQueries.setOnline(user);

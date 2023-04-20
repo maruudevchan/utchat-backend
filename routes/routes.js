@@ -25,7 +25,7 @@ export class Routes{
         
         //chat
         app.route('/findChat/:id1/:id2').get(chatsController.findChat);
-
+        app.route('/findMyChats/:id').get(chatsController.findChatById);
         //message
         app.route('/sendMessage').post( messagesController.saveMessage);
         app.route('/findMessages/:cid').get( messagesController.findMessages);

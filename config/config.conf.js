@@ -36,17 +36,18 @@ class App {
         });
 
         io.on('connection', (socket) => {
+            socket.on('join-room', (chatId) => {
+              socket.join(`chat-${chatId}`);
+            });
+          
             socket.on('new-message', async (data) => {
-                console.log(data);
-                const query = await messagesQueries.findMessages(data.idchat);
-
-                if(query.ok){
-                    io.emit('new-message', query.data)
-                }
-
-                
-            })
-        });
+              const query = await messagesQueries.findMessages(data.idchat);
+              socket.emit('new-message', data)
+              if (query.ok) {
+                io.to(`chat-${data.idchat}`).emit('new-message', query.data);
+              }
+            });
+          });
     }
     
     config() {

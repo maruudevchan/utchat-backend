@@ -17,6 +17,7 @@ ChatModel.init({
         type: DataTypes.INTEGER,
         allowNull: false
     }
+
 },
     {
         sequelize: DatabaseConfig,
